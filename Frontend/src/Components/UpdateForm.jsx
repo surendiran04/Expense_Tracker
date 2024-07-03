@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 const { VITE_BACKEND_URL } = import.meta.env;
 
 export default function UpdateForm() {
+
   const [isLoading, setIsLoading] = useState(false);
   const [Expense, setExpense] = useState([]);
 
@@ -17,7 +18,7 @@ export default function UpdateForm() {
       errors.Expense_name?.message ||
         errors.Category?.message ||
         errors.Amount?.message ||
-        errors.Expense_date?.message
+        errors.Date?.message
     );
 
   const {
@@ -28,8 +29,8 @@ export default function UpdateForm() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // console.log(data);
-    handleInput(data);
+    // console.log(data,);
+    handleInput(Expense);
     reset();
   };
 
@@ -52,7 +53,6 @@ export default function UpdateForm() {
         const isoFormattedDate = new Date(result.data.Date)
           .toISOString()
           .substring(0, 10);
-        console.log(result.data.Date, isoFormattedDate);
         result.data.Date = isoFormattedDate;
         setExpense(result.data);
       } else {
@@ -97,16 +97,18 @@ export default function UpdateForm() {
             placeholder="Enter Expense name"
             type="text"
             value={Expense.Expense_name}
-            {...register("Expense_name", {
-              required: "Expense name is required",
-            })}
-            disabled={isLoading}
+            onChange={(e) => setExpense({ ...Expense, Expense_name: e.target.value })}
+            // {...register("Expense_name", {
+            //   required: "Expense name is required",
+            // })}
+            // disabled={isLoading}
           />
         </div>
         <div className="flex gap-3  mb-5 py-2 px-5  border-solid border-white bg-white  border-2 ">
           <select
             value={Expense.Category}
-            {...register("Category", { required: "Category is required" })}
+            // {...register("Category", { required: "Category is required" })}
+            onChange={(e) => setExpense({ ...Expense, Category: e.target.value })}
           >
             <option value="" defaultValue>
               Select a category
@@ -122,7 +124,9 @@ export default function UpdateForm() {
             placeholder="Enter Amount"
             type="number"
             value={Expense.Amount}
-            {...register("Amount", { required: "Amount is required" })}
+            onChange={(e) => setExpense({ ...Expense, Amount: e.target.value })}
+
+            // {...register("Amount", { required: "Amount is required" })}
             disabled={isLoading}
           />
         </div>
@@ -131,7 +135,9 @@ export default function UpdateForm() {
             className="text-xl text-black border-none outline-none"
             type="date"
             value={Expense.Date}
-            {...register("Date", { required: "Date is required" })}
+            onChange={(e) => setExpense({ ...Expense, Date: e.target.value })}
+
+            // {...register("Date", { required: "Date is required" })}
             disabled={isLoading}
           />
         </div>

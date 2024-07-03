@@ -15,7 +15,7 @@ export default function Form({setExp}) {
       errors.Expense_name?.message ||
         errors.Category?.message ||
         errors.Amount?.message ||
-        errors.Expense_date?.message
+        errors.Date?.message
     );
 
   const {
